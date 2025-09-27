@@ -1,20 +1,39 @@
-const express = require('express')
-const cors = require('cors');
-const app = express()
-const port = 3000
+const express = require("express");
+const cors = require("cors");
+const sequelize = require("./src/config/database");
+const User = require("./src/models/User");
+const Car = require("./src/models/Car");
 
-let cars = [];
+const app = express();
+const port = 3000;
 
-app.use(cors())
+app.use(cors());
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+
+app.get("/cars", (req, res) => {
+  
+});
+
+
+// Rotas de usuários
+// Rotas -> GET, POST, PUT, DELETE
+
+app.get("/users", async (req, res) => {
+  
 })
 
-app.get('/cars', (req, res) => {
-    res.status(200).json(cars)
-})
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+sequelize
+  .sync({ alter: true }) // Esse comando cria as tabelas no banco de dados, se elas não existirem
+  .then(() => {
+    app.listen(port, () =>
+      console.log(
+        `Database connected successfully and app listening on port ${port}`
+      )
+    );
+  })
+  .catch((error) => {
+    console.log("err: ", error.message);
+  });
