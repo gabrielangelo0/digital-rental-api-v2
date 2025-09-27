@@ -35,6 +35,52 @@ app.post("/cars", async (req, res) => {
   }
 });
 
+app.put("/cars/:id", async (req, res) => {
+  try {
+    const car = await Car.findByPk(req.params.id)
+
+    if (!car) {
+      return res.status(404).json({ error: "Car not found" });
+    }
+
+    await car.update(req.body)
+
+    res.status(200).json(car)
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+})
+
+app.delete("/cars/:id", async (req, res) => {
+  try {
+    const car = await Car.findByPk(req.params.id)
+
+    if (!car) {
+      return res.status(404).json({ error: "Car not found" });
+    }
+
+    await car.destroy()
+
+    res.status(200).json(car)
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+})
+
+app.get("/cars/:id", async (req, res) => {
+  try {
+    const car = await Car.findByPk(req.params.id)
+
+    if (!car) {
+      return res.status(404).json({ error: "Car not found" });
+    }
+
+    res.status(200).json(car)
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+})
+
 // Rotas de usuários
 // Rotas -> GET, POST, PUT, DELETE
 
