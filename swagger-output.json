@@ -1,0 +1,242 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Digital Rent - Documentation API",
+    "description": "Some description..."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/cars": {
+      "get": {
+        "tags": [
+          "Cars"
+        ],
+        "summary": "Retorna uma lista de carros cadastrados.",
+        "description": "This endpoint will return a user by id...",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Cars"
+        ],
+        "summary": "Cria um novo carro no banco de dados.",
+        "description": "Esse endpoint espera receber dados referentes a um carro para que seu cadastro seja realizado na plataforma.",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/bodyCar"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cars/{id}": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "bodyCar": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "McLaren"
+          },
+          "image": {
+            "type": "string",
+            "example": "https://static.wikia.nocookie.net/pedrofilms-inc/images/7/75/3240px-McLaren_P1.jpg/revision/latest?cb=20230510135230&path-prefix=pt-br"
+          },
+          "price": {
+            "type": "number",
+            "example": 100000
+          },
+          "category": {
+            "type": "string",
+            "example": "deluxe"
+          },
+          "transmission": {
+            "type": "string",
+            "example": "automatic"
+          },
+          "fuel": {
+            "type": "string",
+            "example": "gasolina"
+          },
+          "seats": {
+            "type": "number",
+            "example": 2
+          },
+          "available": {
+            "type": "boolean",
+            "example": true
+          }
+        },
+        "required": [
+          "name",
+          "image",
+          "price",
+          "category",
+          "transmission",
+          "fuel",
+          "seats",
+          "available"
+        ]
+      },
+      "someResponse": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Jhon Doe"
+          },
+          "age": {
+            "type": "number",
+            "example": 29
+          },
+          "diplomas": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "school": {
+                  "type": "string",
+                  "example": "XYZ University"
+                },
+                "year": {
+                  "type": "number",
+                  "example": 2020
+                },
+                "completed": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "internship": {
+                  "type": "object",
+                  "properties": {
+                    "hours": {
+                      "type": "number",
+                      "example": 290
+                    },
+                    "location": {
+                      "type": "string",
+                      "example": "XYZ Company"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "someEnum": {
+        "type": "string",
+        "enum": [
+          "red",
+          "yellow",
+          "green"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

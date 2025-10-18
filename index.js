@@ -1,11 +1,19 @@
+const swaggerUi = require('swagger-ui-express');
+const swaggerFile = require('./swagger-output.json');
+const bodyParser = require('body-parser');
+
 const express = require("express");
 const cors = require("cors");
 const sequelize = require("./src/config/database");
 const User = require("./src/models/User");
 const Car = require("./src/models/Car");
+const carsRoutes = require("./src/routes/cars.route");
 
 const app = express();
 const port = 3000;
+
+app.use(bodyParser.json());
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use(cors());
 app.use(express.json());
@@ -14,72 +22,7 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.get("/cars", async (req, res) => {
-  try {
-    const allCars = await Car.findAll();
-
-    res.status(200).json(allCars);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-app.post("/cars", async (req, res) => {
-  try {
-    console.log(req.body);
-    const newCar = await Car.create(req.body);
-
-    res.status(201).json(newCar);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-app.put("/cars/:id", async (req, res) => {
-  try {
-    const car = await Car.findByPk(req.params.id)
-
-    if (!car) {
-      return res.status(404).json({ error: "Car not found" });
-    }
-
-    await car.update(req.body)
-
-    res.status(200).json(car)
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-})
-
-app.delete("/cars/:id", async (req, res) => {
-  try {
-    const car = await Car.findByPk(req.params.id)
-
-    if (!car) {
-      return res.status(404).json({ error: "Car not found" });
-    }
-
-    await car.destroy()
-
-    res.status(200).json(car)
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-})
-
-app.get("/cars/:id", async (req, res) => {
-  try {
-    const car = await Car.findByPk(req.params.id)
-
-    if (!car) {
-      return res.status(404).json({ error: "Car not found" });
-    }
-
-    res.status(200).json(car)
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-})
+app.use(carsRoutes)
 
 // Rotas de usuários
 // Rotas -> GET, POST, PUT, DELETE
