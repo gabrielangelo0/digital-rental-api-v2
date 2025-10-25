@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const express = require("express");
 const cors = require("cors");
 const carsRoutes = require("../src/routes/cars.route");
+const usersRoutes = require("../src/routes/users.route");
 
 const app = express();
 
@@ -18,7 +19,8 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.use(carsRoutes)
+app.use(carsRoutes);
+app.use(usersRoutes);
 
 // Rotas de usuários
 // Rotas -> GET, POST, PUT, DELETE
